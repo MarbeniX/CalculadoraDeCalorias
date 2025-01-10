@@ -1,8 +1,13 @@
 import { Categories } from "../data/Category"
 import { useState } from "react"
-import { Activity } from "../types"
+import type { Activity } from "../types"
+import { ActivityActions } from "../reducers/activityReduce"
 
-export default function Form() {
+type FormProps = {
+    dispatch: React.Dispatch<ActivityActions>
+}
+
+export default function Form({dispatch} : FormProps) {
     const [activity, setActivity] = useState<Activity>({
         category: 1,
         name: '',
@@ -24,7 +29,7 @@ export default function Form() {
 
     const handleSubmite = (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('activity', activity)
+        dispatch({ type: 'save-activity', payload: { newActivity: activity } })
     }
 
     return (
